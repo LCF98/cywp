@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cywp.soft.mapper.UserMapper">
+<!--    id是方法名，后面是参数类型  对应mybatis.xml-->
+    <insert id="addUser" parameterType="User">
+        insert into user (username,password,sex,education,job,phone,email)
+        values(#{userName},#{password},#{sex},#{education},#{job},#{phone},#{email})
+    </insert>
+
+    <delete id="deleteUserById">
+        delete from user where id=#{0}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update user set username=#{userName},password=#{password},sex=#{sex},education=#{education},
+        job=#{job},phone=#{phone},email=#{email},state=#{state} where id=#{id}
+    </update>
+
+    <select id="findAll" resultType="User">
+        select * from user
+    </select>
+
+<!--登入-->
+    <select id="login" resultType="User">
+        select * from user where account=#{0} and password=#{1}
+    </select>
+
+    <select id="findMenusByPid" resultType="Menu">
+        select m.mId,d.dName name,url,pId from menu m, dic d ,power p where m.mId=d.did  and m.mId=p.pId and p.roleId=#{0} and pId=#{1}
+    </select>
+
+<!--&lt;!&ndash;    获取所有用户集合&ndash;&gt;-->
+<!--    <select id="getUserList" resultType="User" parameterType="java.util.Map">-->
+<!--        select *-->
+<!--        from user-->
+<!--        where 1=1-->
+<!--        <if test="_parameter.containsKey('beginTime')">-->
+<!--            <![CDATA[and regTime >= #{beginTime}]]>-->
+<!--        </if>-->
+<!--        <if test="_parameter.containsKey('endTime')">-->
+<!--            <![CDATA[and regTime<= #{endTime}]]>-->
+<!--        </if>-->
+<!--        <if test="_parameter.containsKey('userName')">-->
+<!--            and username like concat('%',#{userName},'%')-->
+<!--        </if>-->
+<!--        limit #{offSet},#{pageSize}-->
+<!--    </select>-->
+<!--&lt;!&ndash;    获取总数量&ndash;&gt;-->
+<!--    <select id="findCount" resultType="int" parameterType="java.util.Map">-->
+<!--        select count(*)-->
+<!--        from user-->
+<!--        where 1=1-->
+<!--        <if test="_parameter.containsKey('beginTime')">-->
+<!--            <![CDATA[and regTime >= #{beginTime}]]>-->
+<!--        </if>-->
+<!--        <if test="_parameter.containsKey('endTime')">-->
+<!--            <![CDATA[and regTime<= #{endTime}]]>-->
+<!--        </if>-->
+<!--        <if test="_parameter.containsKey('userName')">-->
+<!--            and username like concat('%',#{userName},'%')-->
+<!--        </if>-->
+<!--    </select>-->
+<!--&lt;!&ndash;    注册用户名检测&ndash;&gt;-->
+<!--    <select id="regCheck" resultType="boolean">-->
+<!--        select count(*) from user where username=#{0}-->
+<!--    </select>-->
+<!--&lt;!&ndash;    注册插入数据库&ndash;&gt;-->
+<!--    <select id="reg" resultType="boolean">-->
+<!--        insert into user (username,password,sex,education,job,phone,email)-->
+<!--        values(#{userName},#{password},#{sex},#{education},#{job},#{phone},#{email})-->
+<!--    </select>-->
+<!--&lt;!&ndash;    禁用用户&ndash;&gt;-->
+<!--    <select id="changeStateNo" resultType="Integer">-->
+<!--        update user set state=#{a} where id=#{userId}-->
+<!--    </select>-->
+<!--&lt;!&ndash;    启用用户&ndash;&gt;-->
+<!--    <select id="changeStateYes" resultType="int">-->
+<!--        update user set state='启用' where id=#{0}-->
+<!--    </select>-->
+
+</mapper>
